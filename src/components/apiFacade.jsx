@@ -68,12 +68,18 @@ function apiFacade(){
       setIsLoggedIn(false);
     }
 
+    const sendSpotifyCode = (code) => {
+      const options = makeOptions("POST",true,{code: code});
+      fetch(URL + "EDIT ME PLEASE OH GOD", options)
+    }
+
     return{
         doLogin,
         setToken,
         getToken,
         logOut,
-        fetchUserData
+        fetchUserData,
+        sendSpotifyCode
     }
         
     

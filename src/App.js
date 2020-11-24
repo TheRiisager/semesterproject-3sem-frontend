@@ -6,10 +6,12 @@ import {
 } from "react-router-dom";
 import facade from './components/apiFacade';
 import Login from './components/login';
+import SpotifyLogin from './components/spotifyLogin';
 import UserPage from './components/userPage';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isSpotifyConnected, setIsSpotifyConnected] = useState(false);
   const [roles, setRoles] = useState([]);
 
   return (
@@ -47,7 +49,8 @@ function App() {
               <button onClick={() => facade.logOut(setIsLoggedIn, setRoles)}>Log out</button>
             </div>
           :
-            <Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setRoles={setRoles}/>
+            <SpotifyLogin setIsSpotifyConnected={setIsSpotifyConnected} />
+            //<Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setRoles={setRoles}/>
           }
         </Route>
         <Route path="/user">
