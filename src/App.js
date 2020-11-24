@@ -49,8 +49,7 @@ function App() {
               <button onClick={() => facade.logOut(setIsLoggedIn, setRoles)}>Log out</button>
             </div>
           :
-            <SpotifyLogin setIsSpotifyConnected={setIsSpotifyConnected} />
-            //<Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setRoles={setRoles}/>
+            <Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setRoles={setRoles}/>
           }
         </Route>
         <Route path="/user">
