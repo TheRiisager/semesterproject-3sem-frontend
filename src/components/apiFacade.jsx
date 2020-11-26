@@ -70,7 +70,7 @@ function apiFacade(){
 
     const sendSpotifyCode = (code) => {
       const options = makeOptions("POST",true,{code: code});
-      fetch(URL + "EDIT ME PLEASE OH GOD", options)
+      fetch(URL + "/api/spotify/auth", options)
     }
 
     return{
