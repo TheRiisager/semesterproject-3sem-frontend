@@ -1,44 +1,38 @@
 import { useEffect, useState } from 'react';
 
-fetch(" https://orion.apiseeds.com/api/music/lyric/Eminem/Lose yourself"
-  // + props.artist + "/" + props.songName
-  + "?apikey=gcNODnOj5VuEJKCD98kixEwzNsNTVujeAfBregVPgARsL6tP2uCGSRZZnXXdluGt")
-  .then(res => res.json())
-  .then(data => console.log(data)
-  )
-
-
-function LyricsText() {
-
-}
-
 function LyricsConnect(props) {
-  let serverDataMap =
-    [{ key: "result.track.text", value:""},
-    { key: "result.artist.name", value:"" },
-    { key: "result.track.name", value:"" }];
 
-  let [serverData, setServerData] = useState({serverDataMap})
+  let initServerData = {
+    result: {
+      artist: {
+        name: "loading..."
+      },
+      track: {
+        text: "loading...",
+        name: "loading..."
+      }
+    }
+  }
+const [serverData, setServerData] = useState(initServerData);
 useEffect(() => {
-  fetch(" https://orion.apiseeds.com/api/music/lyric/Eminem/Lose yourself"
-    // + props.artist + "/" + props.songName
+  fetch(" https://orion.apiseeds.com/api/music/lyric/"
+    + props.artist + "/" + props.songName
     + "?apikey=gcNODnOj5VuEJKCD98kixEwzNsNTVujeAfBregVPgARsL6tP2uCGSRZZnXXdluGt")
     .then(res => res.json())
-    .then(data => setServerData(data)
-    )
-}, [])
+    .then(data => setServerData(data))
+},[])
 
 
 return (
   <div>
     <p>Du har ramt lyrics</p>
     <label htmlFor="songName">Song name</label>
-    <input disabled id="songName" value="Lose yourself"></input>
+    <input disabled id="songName" value={serverData.result.track.name}></input>
     <label htmlFor="artistName">Artist</label>
-    <input disabled id="arstistName" value=""></input>
+    <input disabled id="arstistName" value={serverData.result.artist.name}></input>
     <br></br>
-    <textarea readOnly value=""></textarea>
-    <p>{serverData.result.artist.name}</p>
+    <textarea readOnly value={serverData.result.track.text}></textarea>
+    <p></p>
   </div>
 );
 }
