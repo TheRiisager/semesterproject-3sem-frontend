@@ -17,7 +17,7 @@ function App() {
   const [roles, setRoles] = useState([]);
 
   useEffect(() => {
-    if(facade.getToken != null) {
+    if( facade.getToken() ) {
       let tokenPayload = decoder.getPayload(facade.getToken())
       setIsLoggedIn(true)
       setRoles(tokenPayload.roles.split(","))
