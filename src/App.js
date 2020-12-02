@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -9,11 +9,21 @@ import Login from './components/login';
 import SpotifyLogin from './components/spotifyLogin';
 import UserPage from './components/userPage';
 import LyricsConnect from './components/lyrics';
+import decoder from './components/jwtDecoder';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isSpotifyConnected, setIsSpotifyConnected] = useState(false);
   const [roles, setRoles] = useState([]);
+
+  useEffect(() => {
+    if(facade.getToken != null) {
+      let tokenPayload = decoder.getPayload(facade.getToken())
+      setIsLoggedIn(true)
+      setRoles(tokenPayload.roles.split(","))
+      setIsSpotifyConnected(tokenPayload.hasSpotify)
+    }
+  },[])
 
   return (
     <Router>
@@ -46,11 +56,12 @@ function App() {
         <Route exact path="/">
           {isLoggedIn ?
             <div>
+              <SpotifyLogin setIsSpotifyConnected={setIsSpotifyConnected}/>
               <UserPage roles={roles} />
               <button onClick={() => facade.logOut(setIsLoggedIn, setRoles)}>Log out</button>
             </div>
           :
-            <Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setRoles={setRoles}/>
+            <Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setRoles={setRoles} setIsSpotifyConnected={setIsSpotifyConnected}/>
           }
         </Route>
         <Route path="/user">

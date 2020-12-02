@@ -1,4 +1,5 @@
 import settings from '../settings.json'
+import decoder from './jwtDecoder';
 
 const URL = settings.URL;
 
@@ -45,7 +46,7 @@ function apiFacade(){
         return localStorage.getItem("jwtToken")
     }
 
-    const doLogin = (user, pass, setIsLoggedIn, setRoles, setLoginError) => {
+    const doLogin = (user, pass, setIsLoggedIn, setRoles, setLoginError, setIsSpotifyConnected) => {
         const options = makeOptions("POST",false,{username: user, password: pass});
         fetch(URL + "/api/login", options)
         .then(handleHttpErrors)
@@ -53,6 +54,7 @@ function apiFacade(){
             setToken(res.token);
             setRoles(res.roles.split(","));
             setIsLoggedIn(true);
+            setIsSpotifyConnected( decoder.getPayload(res.token).hasSpotify )
         })
         .catch(err => {
             console.log("fetch request to login endpoint failed: " + err.status);

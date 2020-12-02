@@ -4,6 +4,7 @@ import facade from './apiFacade';
 const Login = (props) => {
     const setIsLoggedIn = props.setIsLoggedIn;
     const setRoles = props.setRoles;
+    const setIsSpotifyConnected = props.setIsSpotifyConnected
     const init = { username: "", password: "" };
     const [loginCredentials, setLoginCredentials] = useState(init);
     const [loginError, setLoginError] = useState("");
@@ -14,7 +15,7 @@ const Login = (props) => {
 
     const doLogin = (event) => {
         event.preventDefault();
-        facade.doLogin(loginCredentials.username, loginCredentials.password, setIsLoggedIn, setRoles, setLoginError);
+        facade.doLogin(loginCredentials.username, loginCredentials.password, setIsLoggedIn, setRoles, setLoginError, setIsSpotifyConnected);
     }
 
     return (
