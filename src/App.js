@@ -6,7 +6,6 @@ import {
 } from "react-router-dom";
 import facade from './components/apiFacade';
 import Login from './components/login';
-import SpotifyLogin from './components/spotifyLogin';
 import UserPage from './components/userPage';
 import LyricsConnect from './components/lyrics';
 import decoder from './components/jwtDecoder';
@@ -56,8 +55,7 @@ function App() {
         <Route exact path="/">
           {isLoggedIn ?
             <div>
-              <SpotifyLogin setIsSpotifyConnected={setIsSpotifyConnected}/>
-              <UserPage roles={roles} />
+              <UserPage roles={roles} isSpotifyConnected={isSpotifyConnected} setIsSpotifyConnected={setIsSpotifyConnected}/>
               <button onClick={() => facade.logOut(setIsLoggedIn, setRoles)}>Log out</button>
             </div>
           :

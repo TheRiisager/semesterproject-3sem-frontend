@@ -75,13 +75,25 @@ function apiFacade(){
       fetch(URL + "/api/spotify/auth", options)
     }
 
+    const getTrackInfo = (trackid) => {
+      let options = makeOptions("GET",true)
+      if(trackid){
+        options = makeOptions("GET",true,{trackid: trackid})
+      }
+      return fetch(URL + "/api/spotify/trackinfo",options)
+      .then(handleHttpErrors)
+      .catch(err => console.log("Request to trackinfo endpoint failed:" + err.status))
+      
+    }
+
     return{
         doLogin,
         setToken,
         getToken,
         logOut,
         fetchUserData,
-        sendSpotifyCode
+        sendSpotifyCode,
+        getTrackInfo
     }
         
     

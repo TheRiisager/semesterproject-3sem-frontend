@@ -1,42 +1,53 @@
 import { useEffect, useState } from 'react';
+import facade from './apiFacade';
 
-function LyricsConnect(props) {
+function LyricsConnect() {
 
-  let initServerData = {
-    result: {
-      artist: {
-        name: "loading..."
-      },
-      track: {
-        text: "loading...",
-        name: "loading..."
-      }
-    }
+  const initTrackInfo = {
+    trackname: "loading...",
+    tracklength: "loading...",
+    trackpos: "loading...",
+    artistname: "loading...",
+    albumname: "loading...",
+    trackid: "DUMMY",
+    lyrics: "loading..."
   }
-const [serverData, setServerData] = useState(initServerData);
+let trackInfo = initTrackInfo;
+
 useEffect(() => {
-  fetch(" https://orion.apiseeds.com/api/music/lyric/"
-    + props.artist + "/" + props.songName
-    + "?apikey=gcNODnOj5VuEJKCD98kixEwzNsNTVujeAfBregVPgARsL6tP2uCGSRZZnXXdluGt")
-    .then(res => res.json())
-    .then(data => setServerData(data))
+  setInterval( () => {
+    console.log(trackInfo.trackid)
+    if(!trackInfo.trackid === "DUMMY"){
+      facade.getTrackInfo(trackInfo.trackid)
+      .then(data => trackInfo = data)
+    } else {
+      facade.getTrackInfo()
+      .then(data => trackInfo = data)
+    }
+  },500)
+
+  return () => {
+    clearInterval();
+  }
+
 },[])
 
+
+
+//const [trackInfo, setTrackInfo] = useState(initTrackInfo);
 
 return (
   <div>
     <p>Du har ramt lyrics</p>
     <label htmlFor="songName">Song name</label>
-    <input disabled id="songName" value={serverData.result.track.name}></input>
+    <input disabled id="songName" value={trackInfo.trackname}></input>
     <label htmlFor="artistName">Artist</label>
-    <input disabled id="arstistName" value={serverData.result.artist.name}></input>
+    <input disabled id="arstistName" value={trackInfo.artistname}></input>
     <br></br>
-    <textarea readOnly value={serverData.result.track.text}></textarea>
+    <textarea readOnly value={trackInfo.lyrics}></textarea>
     <p></p>
   </div>
 );
 }
 
 export default LyricsConnect;
-
-//{serverData.result.artist.name}
