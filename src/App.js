@@ -10,6 +10,11 @@ import SpotifyLogin from './components/spotifyLogin';
 import UserPage from './components/userPage';
 import LyricsConnect from './components/lyrics';
 import decoder from './components/jwtDecoder';
+import musicPlayer from './components/musicPlayer';
+
+
+
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -20,7 +25,7 @@ function App() {
     if( facade.getToken() ) {
       let tokenPayload = decoder.getPayload(facade.getToken())
       setIsLoggedIn(true)
-      setRoles(tokenPayload.roles.split(","))
+      setRoles(tokenPayload.roles.split (","))
       setIsSpotifyConnected(tokenPayload.hasSpotify)
     }
   },[])
@@ -51,6 +56,13 @@ function App() {
             : ""
           }
 
+          {roles.includes("user") || roles.includes("admin") ?
+            <li>
+              <Link to="/musicplayer">Music player</Link>
+            </li>
+            : ""
+          }
+
         </ul>
 
         <Route exact path="/">
@@ -61,7 +73,13 @@ function App() {
               <button onClick={() => facade.logOut(setIsLoggedIn, setRoles)}>Log out</button>
             </div>
           :
-            <Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setRoles={setRoles} setIsSpotifyConnected={setIsSpotifyConnected}/>
+            <div>
+             <musicPlayer/>         
+               <Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setRoles={setRoles} setIsSpotifyConnected={setIsSpotifyConnected}/> 
+              
+            </div>
+            
+
           }
         </Route>
         <Route path="/user">
@@ -90,6 +108,20 @@ function App() {
             
           </LyricsConnect>
         </Route>
+
+        <Route path="/musicplayer">
+          {roles.includes("user") || roles.includes("admin") ?
+          
+          
+            musicPlayer()
+            
+            :
+            <p>You are not allowed to view this page</p>
+          }
+           
+          
+        </Route>
+        
       </div>
     </Router>
   )

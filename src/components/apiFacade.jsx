@@ -75,13 +75,66 @@ function apiFacade(){
       fetch(URL + "/api/spotify/auth", options)
     }
 
+// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    const NextSong = () => {
+
+      
+      const options = makeOptions("POST", true);
+      
+      
+      fetch(URL + "/api/spotify/next", options)
+       .then(handleHttpErrors)
+       .catch(err => console.log("fetch request to info endpoint failed: " + err.status));
+  
+              }
+  
+      const PreviousSong = () => {
+ 
+          const options = makeOptions("POST", true);
+      
+          fetch(URL +  "/api/spotify/previous", options)
+          .then(handleHttpErrors)
+          .catch(err => console.log("fetch request to info endpoint failed: " + err.status));
+  
+      }
+  
+  
+       const Play = () => {
+  
+      const options = makeOptions("PUT", true);
+      
+        fetch(URL  + "/api/spotify/play", options)
+       .then(handleHttpErrors)
+       .catch(err => console.log("fetch request to info endpoint failed: " + err.status));
+  
+              }
+  
+  
+      const Pause = () => {
+  
+      const options = makeOptions("PUT", true);
+      
+      fetch(URL + "/api/spotify/pause", options)
+                  .then(handleHttpErrors)
+      .catch(err => console.log("fetch request to info endpoint failed: " + err.status));
+
+                      }
+
+ // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
     return{
         doLogin,
         setToken,
         getToken,
         logOut,
         fetchUserData,
-        sendSpotifyCode
+        sendSpotifyCode,
+        NextSong,
+        PreviousSong,
+        Play,
+        Pause  
     }
         
     
