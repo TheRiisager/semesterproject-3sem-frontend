@@ -1,3 +1,4 @@
 {
-    "URL": "http://localhost:8080/ca3backend_war"
+    "URL": "http://localhost:8080/sem3backend_war",
+    "URL_LOCAL": "http://localhost:8080/sem3backend_war"
 }

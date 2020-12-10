@@ -22,6 +22,7 @@ const UserPage = (props) => {
 
     return (
         <div>
+            <LyricsConnect></LyricsConnect>
             <SpotifyLogin setIsSpotifyConnected={setIsSpotifyConnected}/>
         </div>
     )

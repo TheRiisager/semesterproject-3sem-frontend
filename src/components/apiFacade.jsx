@@ -76,9 +76,9 @@ function apiFacade(){
     }
 
     const getTrackInfo = (trackid) => {
-      let options = makeOptions("GET",true)
+      let options = makeOptions("POST",true)
       if(trackid){
-        options = makeOptions("GET",true,{trackid: trackid})
+        options = makeOptions("POST",true,{trackid: trackid})
       }
       return fetch(URL + "/api/spotify/trackinfo",options)
       .then(handleHttpErrors)
